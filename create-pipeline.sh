@@ -13,7 +13,7 @@ fi
 
 set -eu
 
-aws cloudformation create-stack \
+aws cloudformation update-stack \
         --capabilities CAPABILITY_IAM \
         --stack-name $CODEPIPELINE_STACK_NAME \
         --parameters ParameterKey=GitHubOAuthToken,ParameterValue=${1} \
