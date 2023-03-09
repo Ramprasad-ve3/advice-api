@@ -24,7 +24,7 @@ Parameters:
 
   GitHubRepo:
     Type: String
-    Default: github-codepipeline
+    Default: github-advice-api
     AllowedPattern: "[A-Za-z0-9-]+"
 
   GitHubBranch:
@@ -35,7 +35,7 @@ Parameters:
   # *** The stack name for the actual application we're deploying
   ApplicationStackName:
     Type: String
-    Default: github-codepipeline-app
+    Default: github-advice-api
     AllowedPattern: "[A-Za-z0-9-]+"
 
 Resources:
@@ -104,7 +104,7 @@ Resources:
       Filters:
       - JsonPath: "$.ref"
         MatchEquals: refs/heads/{Branch}
-      TargetPipeline: !Ref CodePipeline
+      TargetPipeline: !Ref advice-api
       TargetAction: Source
       TargetPipelineVersion: !GetAtt CodePipeline.Version
 
@@ -116,10 +116,10 @@ Resources:
         Statement:
           Effect: Allow
           Principal:
-            Service: codepipeline.amazonaws.com
+            Service: advice-api.amazonaws.com
           Action: sts:AssumeRole
 
-  CodePipelineServiceRolePolicy:
+  advice-api ServiceRolePolicy:
     Type: AWS::IAM::Policy
     Properties: 
       PolicyDocument:
@@ -245,9 +245,9 @@ Resources:
             - appconfig:StopDeployment
             - appconfig:GetDeployment
             Resource: "*"
-      PolicyName: CodePipelineServiceRolePolicy
+      PolicyName: advice-api ServiceRolePolicy
       Roles: 
-        - !Ref CodePipelineRole
+        - !Ref advice-api Role
 
 
   CloudformationRole:
